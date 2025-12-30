@@ -175,7 +175,7 @@ Comprehensive documentation is available in the `docs/` directory:
 ## 🏗️ Project Structure
 
 ```
-Q0Tech/
+Q-Tech/
 ├── backend/           # Node.js/Express API
 │   ├── controllers/   # Request handlers
 │   ├── models/        # Database models
