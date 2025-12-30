@@ -6,7 +6,9 @@ require('dotenv').config();
 const poolConfig = process.env.DATABASE_URL
   ? {
       connectionString: process.env.DATABASE_URL,
-      ssl: process.env.DATABASE_URL.includes('railway') ? { rejectUnauthorized: false } : false,
+      ssl: process.env.DATABASE_URL.includes('.proxy.rlwy.net') || process.env.DATABASE_URL.includes('railway')
+        ? { rejectUnauthorized: false }
+        : false,
     }
   : {
       host: process.env.DB_HOST || 'localhost',
