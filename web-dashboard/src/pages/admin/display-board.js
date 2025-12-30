@@ -1,7 +1,8 @@
 import { useEffect, useState } from 'react';
 import { useRouter } from 'next/router';
 import { FiRefreshCw, FiMonitor } from 'react-icons/fi';
-import { MdQueue, MdAccessTime } from 'react-icons/md';
+import { MdQueue, MdAccessTime, MdCheckCircle } from 'react-icons/md';
+import { HiOutlineClock } from 'react-icons/hi';
 import apiClient from '../../lib/api';
 import { isAuthenticated, getStoredUser } from '../../lib/auth';
 
@@ -14,6 +15,7 @@ export default function DisplayBoard() {
   const [services, setServices] = useState([]);
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [currentTime, setCurrentTime] = useState(new Date());
+  const [logoPosition, setLogoPosition] = useState(0);
 
   useEffect(() => {
     if (typeof window === 'undefined') return;
@@ -36,9 +38,15 @@ export default function DisplayBoard() {
       loadDisplayData();
     }, 5000);
 
+    // Animate logo
+    const logoInterval = setInterval(() => {
+      setLogoPosition(prev => (prev + 1) % 100);
+    }, 50);
+
     return () => {
       clearInterval(timeInterval);
       clearInterval(dataInterval);
+      clearInterval(logoInterval);
     };
   }, [selectedService]);
 
@@ -86,7 +94,7 @@ export default function DisplayBoard() {
     return (
       <div style={styles.container}>
         <div style={styles.loadingContainer}>
-          <FiRefreshCw style={styles.spinner} className="spin" />
+          <div style={styles.loadingSpinner}></div>
           <p style={styles.loadingText}>Loading display board...</p>
         </div>
       </div>
@@ -131,14 +139,24 @@ export default function DisplayBoard() {
 
       {/* Display Board Content */}
       <div style={styles.displayContent}>
-        {/* Header */}
+        {/* Professional Header */}
         <div style={styles.header}>
           <div style={styles.headerLeft}>
-            <div style={styles.logoWrapper}>
-              <img src="/logo.png" alt="QTech" style={styles.headerLogo} />
+            <div style={styles.logoContainer}>
+              <div style={styles.logoAnimationWrapper}>
+                <img 
+                  src="/logo.png" 
+                  alt="QTech" 
+                  style={{
+                    ...styles.headerLogo,
+                    transform: `translateX(${Math.sin(logoPosition * 0.1) * 5}px)`,
+                    transition: 'transform 0.3s ease-out'
+                  }} 
+                />
+              </div>
             </div>
             <div style={styles.titleSection}>
-              <h1 style={styles.headerTitle}>QTech Queue System</h1>
+              <h1 style={styles.headerTitle}>QTech Queue Management System</h1>
               <p style={styles.headerSubtitle}>
                 {selectedService 
                   ? services.find(s => s.id === parseInt(selectedService))?.name || 'Service'
@@ -147,21 +165,24 @@ export default function DisplayBoard() {
             </div>
           </div>
           <div style={styles.headerRight}>
-            <div style={styles.timeWrapper}>
-              <div style={styles.timeDisplay}>
-                {currentTime.toLocaleTimeString('en-US', {
-                  hour: '2-digit',
-                  minute: '2-digit',
-                  second: '2-digit',
-                })}
-              </div>
-              <div style={styles.dateDisplay}>
-                {currentTime.toLocaleDateString('en-US', {
-                  weekday: 'long',
-                  year: 'numeric',
-                  month: 'long',
-                  day: 'numeric',
-                })}
+            <div style={styles.timeCard}>
+              <HiOutlineClock size={32} style={styles.clockIcon} />
+              <div style={styles.timeContent}>
+                <div style={styles.timeDisplay}>
+                  {currentTime.toLocaleTimeString('en-US', {
+                    hour: '2-digit',
+                    minute: '2-digit',
+                    second: '2-digit',
+                  })}
+                </div>
+                <div style={styles.dateDisplay}>
+                  {currentTime.toLocaleDateString('en-US', {
+                    weekday: 'long',
+                    year: 'numeric',
+                    month: 'long',
+                    day: 'numeric',
+                  })}
+                </div>
               </div>
             </div>
           </div>
@@ -169,27 +190,37 @@ export default function DisplayBoard() {
 
         {/* Main Content Grid */}
         <div style={styles.mainGrid}>
-          {/* Left Column - Currently Serving */}
-          <div style={styles.leftColumn}>
+          {/* Currently Serving - Prominent Section */}
+          <div style={styles.servingColumn}>
             <div style={styles.servingSection}>
               <div style={styles.sectionHeader}>
-                <div style={styles.sectionIcon}>
-                  <MdAccessTime size={36} />
+                <div style={styles.sectionIconWrapper}>
+                  <MdCheckCircle size={32} />
                 </div>
                 <h2 style={styles.sectionTitle}>Currently Serving</h2>
               </div>
               <div style={styles.servingContent}>
                 {displayData?.serving && displayData.serving.length > 0 ? (
-                  <div style={styles.servingList} className="serving-list">
-                    {displayData.serving.map((queue) => (
-                      <div key={queue.id} style={styles.servingCard}>
-                        <div style={styles.queueNumberLarge}>{queue.queue_number}</div>
-                        <div style={styles.queueInfo}>
-                          <div style={styles.serviceName}>{queue.service_name}</div>
+                  <div style={styles.servingGrid}>
+                    {displayData.serving.map((queue, index) => (
+                      <div 
+                        key={queue.id} 
+                        style={{
+                          ...styles.servingCard,
+                          animationDelay: `${index * 0.2}s`
+                        }}
+                        className="serving-card"
+                      >
+                        <div style={styles.queueNumberContainer}>
+                          <div style={styles.queueNumberLarge}>{queue.queue_number}</div>
+                          <div style={styles.queueBadge}>NOW SERVING</div>
+                        </div>
+                        <div style={styles.queueDetails}>
+                          <div style={styles.serviceNameLarge}>{queue.service_name}</div>
                           {queue.counter_name && (
-                            <div style={styles.counterInfo}>
-                              <span style={styles.counterLabel}>Counter {queue.counter_number}</span>
-                              <span style={styles.counterName}>{queue.counter_name}</span>
+                            <div style={styles.counterBadge}>
+                              <span style={styles.counterIcon}>📍</span>
+                              Counter {queue.counter_number} • {queue.counter_name}
                             </div>
                           )}
                         </div>
@@ -198,7 +229,7 @@ export default function DisplayBoard() {
                   </div>
                 ) : (
                   <div style={styles.emptyState}>
-                    <MdQueue size={100} color="#475569" />
+                    <MdQueue size={80} style={styles.emptyIcon} />
                     <p style={styles.emptyText}>No queues currently being served</p>
                   </div>
                 )}
@@ -206,24 +237,31 @@ export default function DisplayBoard() {
             </div>
           </div>
 
-          {/* Right Column */}
+          {/* Right Column - Next in Line & Waiting */}
           <div style={styles.rightColumn}>
             {/* Next in Line */}
             <div style={styles.calledSection}>
-              <div style={styles.sectionHeader}>
-                <div style={styles.sectionIcon}>
-                  <FiRefreshCw size={28} />
+              <div style={styles.sectionHeaderSmall}>
+                <div style={styles.sectionIconSmall}>
+                  <MdAccessTime size={24} />
                 </div>
-                <h2 style={styles.sectionTitle}>Next in Line</h2>
+                <h3 style={styles.sectionTitleSmall}>Next in Line</h3>
               </div>
               <div style={styles.calledContent}>
                 {displayData?.called && displayData.called.length > 0 ? (
-                  <div style={styles.calledList} className="called-list">
-                    {displayData.called.map((queue) => (
-                      <div key={queue.id} style={styles.calledCard}>
+                  <div style={styles.calledList}>
+                    {displayData.called.map((queue, index) => (
+                      <div 
+                        key={queue.id} 
+                        style={{
+                          ...styles.calledCard,
+                          animationDelay: `${index * 0.1}s`
+                        }}
+                        className="called-card"
+                      >
                         <div style={styles.queueNumberMedium}>{queue.queue_number}</div>
-                        <div style={styles.queueInfo}>
-                          <div style={styles.serviceNameSmall}>{queue.service_name}</div>
+                        <div style={styles.queueInfoSmall}>
+                          <div style={styles.serviceNameMedium}>{queue.service_name}</div>
                           {queue.counter_name && (
                             <div style={styles.counterInfoSmall}>
                               Counter {queue.counter_number}
@@ -243,15 +281,15 @@ export default function DisplayBoard() {
 
             {/* Waiting Counts */}
             <div style={styles.waitingSection}>
-              <div style={styles.sectionHeader}>
-                <div style={styles.sectionIcon}>
-                  <MdQueue size={28} />
+              <div style={styles.sectionHeaderSmall}>
+                <div style={styles.sectionIconSmall}>
+                  <MdQueue size={24} />
                 </div>
-                <h2 style={styles.sectionTitle}>Waiting</h2>
+                <h3 style={styles.sectionTitleSmall}>Waiting</h3>
               </div>
               <div style={styles.waitingContent}>
                 {displayData?.waiting && displayData.waiting.length > 0 ? (
-                  <div style={styles.waitingGrid} className="waiting-grid">
+                  <div style={styles.waitingGrid}>
                     {displayData.waiting.map((service) => (
                       <div key={service.service_id} style={styles.waitingCard}>
                         <div style={styles.waitingServiceName}>{service.service_name}</div>
@@ -270,16 +308,17 @@ export default function DisplayBoard() {
           </div>
         </div>
 
-        {/* Running Text Banner */}
-        <div style={styles.marqueeContainer}>
-          <div style={styles.marqueeWrapper}>
-            <div style={styles.marqueeContent}>
-              <span style={styles.marqueeText}>
-                🎉 Welcome to QTech Queue Management System! 🎉 Experience a smarter way to manage queues. No more waiting in long lines - get your queue number from your mobile app and track your position in real-time. You'll receive notifications when it's your turn. Thank you for using our modern queue system! For assistance, please contact our staff.
-              </span>
-              <span style={styles.marqueeText}>
-                🎉 Welcome to QTech Queue Management System! 🎉 Experience a smarter way to manage queues. No more waiting in long lines - get your queue number from your mobile app and track your position in real-time. You'll receive notifications when it's your turn. Thank you for using our modern queue system! For assistance, please contact our staff.
-              </span>
+        {/* Professional Running Banner */}
+        <div style={styles.bannerContainer}>
+          <div style={styles.bannerContent}>
+            <div style={styles.bannerLogo}>
+              <img src="/logo.png" alt="QTech" style={styles.bannerLogoImg} />
+            </div>
+            <div style={styles.bannerText}>
+              Welcome to QTech Queue Management System • Experience smart queue management • Get your queue number from the mobile app • Track your position in real-time • Receive notifications when it's your turn • Thank you for using our modern queue system
+            </div>
+            <div style={styles.bannerLogo}>
+              <img src="/logo.png" alt="QTech" style={styles.bannerLogoImg} />
             </div>
           </div>
         </div>
@@ -291,9 +330,10 @@ export default function DisplayBoard() {
 const styles = {
   container: {
     minHeight: '100vh',
-    backgroundColor: '#0a0e27',
-    color: 'white',
+    backgroundColor: '#0f172a',
+    color: '#ffffff',
     overflow: 'hidden',
+    fontFamily: '-apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif',
   },
   loadingContainer: {
     display: 'flex',
@@ -301,23 +341,28 @@ const styles = {
     justifyContent: 'center',
     alignItems: 'center',
     minHeight: '100vh',
+    gap: '24px',
   },
-  spinner: {
-    color: '#dc2626',
-    marginBottom: '24px',
+  loadingSpinner: {
+    width: '60px',
+    height: '60px',
+    border: '4px solid rgba(220, 38, 38, 0.2)',
+    borderTop: '4px solid #dc2626',
+    borderRadius: '50%',
+    animation: 'spin 1s linear infinite',
   },
   loadingText: {
     color: '#cbd5e0',
-    fontSize: '24px',
+    fontSize: '20px',
     fontWeight: '500',
   },
   controlBar: {
-    backgroundColor: '#1a1f3a',
+    backgroundColor: '#1e293b',
     padding: '16px 32px',
     display: 'flex',
     justifyContent: 'space-between',
     alignItems: 'center',
-    borderBottom: '2px solid #2d3748',
+    borderBottom: '1px solid #334155',
     zIndex: 1000,
   },
   controlLeft: {
@@ -327,16 +372,16 @@ const styles = {
   logoSection: {
     display: 'flex',
     alignItems: 'center',
-    gap: '16px',
+    gap: '12px',
   },
   logoImage: {
-    width: '40px',
-    height: '40px',
+    width: '32px',
+    height: '32px',
     objectFit: 'contain',
   },
   controlTitle: {
-    fontSize: '20px',
-    fontWeight: '700',
+    fontSize: '18px',
+    fontWeight: '600',
     color: 'white',
     margin: 0,
   },
@@ -346,9 +391,9 @@ const styles = {
     gap: '12px',
   },
   serviceSelect: {
-    padding: '10px 16px',
-    backgroundColor: '#2d3748',
-    border: '1px solid #4a5568',
+    padding: '8px 16px',
+    backgroundColor: '#334155',
+    border: '1px solid #475569',
     borderRadius: '8px',
     color: 'white',
     fontSize: '14px',
@@ -358,20 +403,20 @@ const styles = {
     display: 'flex',
     alignItems: 'center',
     gap: '8px',
-    padding: '10px 20px',
-    backgroundColor: '#2d3748',
-    border: '1px solid #4a5568',
+    padding: '8px 16px',
+    backgroundColor: '#334155',
+    border: '1px solid #475569',
     borderRadius: '8px',
     color: 'white',
     fontSize: '14px',
-    fontWeight: '600',
+    fontWeight: '500',
     cursor: 'pointer',
   },
   fullscreenButton: {
     display: 'flex',
     alignItems: 'center',
     gap: '8px',
-    padding: '10px 20px',
+    padding: '8px 16px',
     backgroundColor: '#dc2626',
     border: 'none',
     borderRadius: '8px',
@@ -381,121 +426,133 @@ const styles = {
     cursor: 'pointer',
   },
   displayContent: {
-    padding: '32px 40px',
+    padding: '40px',
     maxWidth: '1920px',
     margin: '0 auto',
     display: 'flex',
     flexDirection: 'column',
     minHeight: 'calc(100vh - 73px)',
-    overflow: 'visible',
+    gap: '32px',
   },
   header: {
     display: 'flex',
     justifyContent: 'space-between',
     alignItems: 'center',
-    marginBottom: '32px',
-    paddingBottom: '20px',
-    borderBottom: '2px solid #1e293b',
-    flexShrink: 0,
+    padding: '24px 32px',
+    backgroundColor: '#1e293b',
+    borderRadius: '16px',
+    border: '1px solid #334155',
+    boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
   },
   headerLeft: {
     display: 'flex',
     alignItems: 'center',
-    gap: '20px',
+    gap: '24px',
   },
-  logoWrapper: {
-    width: '70px',
-    height: '70px',
+  logoContainer: {
+    width: '80px',
+    height: '80px',
     borderRadius: '16px',
-    backgroundColor: '#1e293b',
+    backgroundColor: '#0f172a',
     display: 'flex',
     alignItems: 'center',
     justifyContent: 'center',
-    padding: '8px',
+    padding: '12px',
+    border: '2px solid #334155',
+  },
+  logoAnimationWrapper: {
+    width: '100%',
+    height: '100%',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
   },
   headerLogo: {
     width: '100%',
     height: '100%',
     objectFit: 'contain',
+    filter: 'drop-shadow(0 0 8px rgba(220, 38, 38, 0.5))',
   },
   titleSection: {
     display: 'flex',
     flexDirection: 'column',
+    gap: '4px',
   },
   headerTitle: {
-    fontSize: '48px',
-    fontWeight: '900',
-    color: '#dc2626',
+    fontSize: '36px',
+    fontWeight: '700',
+    color: '#ffffff',
     margin: 0,
-    letterSpacing: '-1px',
-    lineHeight: '1.1',
+    letterSpacing: '-0.5px',
   },
   headerSubtitle: {
-    fontSize: '22px',
+    fontSize: '16px',
     color: '#94a3b8',
-    margin: '4px 0 0 0',
+    margin: 0,
     fontWeight: '500',
   },
   headerRight: {
-    textAlign: 'right',
+    display: 'flex',
+    alignItems: 'center',
   },
-  timeWrapper: {
-    backgroundColor: '#1e293b',
+  timeCard: {
+    display: 'flex',
+    alignItems: 'center',
+    gap: '16px',
     padding: '16px 24px',
+    backgroundColor: '#0f172a',
     borderRadius: '12px',
-    border: '2px solid #334155',
+    border: '1px solid #334155',
+  },
+  clockIcon: {
+    color: '#10b981',
+  },
+  timeContent: {
+    display: 'flex',
+    flexDirection: 'column',
+    gap: '4px',
   },
   timeDisplay: {
-    fontSize: '56px',
+    fontSize: '32px',
     fontWeight: '700',
     color: '#10b981',
     fontFamily: 'monospace',
     lineHeight: '1',
   },
   dateDisplay: {
-    fontSize: '18px',
+    fontSize: '14px',
     color: '#cbd5e0',
-    marginTop: '8px',
     fontWeight: '500',
   },
   mainGrid: {
     display: 'grid',
-    gridTemplateColumns: '1.8fr 1fr',
+    gridTemplateColumns: '2fr 1fr',
     gap: '32px',
     flex: 1,
-    marginBottom: '16px',
-    alignItems: 'start',
   },
-  leftColumn: {
+  servingColumn: {
     display: 'flex',
     flexDirection: 'column',
-  },
-  rightColumn: {
-    display: 'flex',
-    flexDirection: 'column',
-    gap: '20px',
   },
   servingSection: {
     flex: 1,
     display: 'flex',
     flexDirection: 'column',
-    backgroundColor: '#0f1419',
-    borderRadius: '24px',
+    backgroundColor: '#1e293b',
+    borderRadius: '20px',
     padding: '32px',
-    border: '3px solid #dc2626',
-    overflow: 'visible',
-    boxShadow: '0 0 30px rgba(220, 38, 38, 0.4), 0 8px 32px rgba(0,0,0,0.5)',
+    border: '1px solid #334155',
+    boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
   },
   sectionHeader: {
     display: 'flex',
     alignItems: 'center',
     gap: '16px',
-    marginBottom: '24px',
-    paddingBottom: '16px',
-    borderBottom: '2px solid #2d3748',
-    flexShrink: 0,
+    marginBottom: '28px',
+    paddingBottom: '20px',
+    borderBottom: '2px solid #334155',
   },
-  sectionIcon: {
+  sectionIconWrapper: {
     width: '56px',
     height: '56px',
     borderRadius: '12px',
@@ -504,168 +561,196 @@ const styles = {
     alignItems: 'center',
     justifyContent: 'center',
     color: 'white',
-    flexShrink: 0,
+    boxShadow: '0 4px 12px rgba(220, 38, 38, 0.3)',
   },
   sectionTitle: {
-    fontSize: '40px',
-    fontWeight: '900',
-    color: '#ff0000',
+    fontSize: '28px',
+    fontWeight: '700',
+    color: '#ffffff',
     margin: 0,
-    textTransform: 'uppercase',
-    letterSpacing: '2px',
-    textShadow: '0 0 20px rgba(255, 0, 0, 0.8)',
+    letterSpacing: '-0.5px',
   },
   servingContent: {
     flex: 1,
-    minHeight: 0,
-    overflow: 'visible',
     display: 'flex',
     flexDirection: 'column',
   },
-  servingList: {
-    flex: 1,
-    display: 'flex',
-    flexDirection: 'column',
-    gap: '16px',
-    overflow: 'visible',
+  servingGrid: {
+    display: 'grid',
+    gridTemplateColumns: 'repeat(auto-fit, minmax(400px, 1fr))',
+    gap: '24px',
   },
   servingCard: {
-    backgroundColor: '#1a0a0a',
-    borderRadius: '20px',
-    padding: '40px',
-    border: '4px solid #dc2626',
-    boxShadow: '0 0 40px rgba(220, 38, 38, 0.8), 0 8px 32px rgba(220, 38, 38, 0.5)',
+    backgroundColor: '#0f172a',
+    borderRadius: '16px',
+    padding: '32px',
+    border: '3px solid #dc2626',
+    boxShadow: '0 8px 24px rgba(220, 38, 38, 0.4)',
     textAlign: 'center',
-    position: 'relative',
-    animation: 'pulseGlow 2s ease-in-out infinite',
+    animation: 'slideInUp 0.6s ease-out',
+    transition: 'transform 0.3s ease, box-shadow 0.3s ease',
+  },
+  queueNumberContainer: {
+    marginBottom: '20px',
   },
   queueNumberLarge: {
-    fontSize: '180px',
+    fontSize: '120px',
     fontWeight: '900',
-    color: '#ff0000',
+    color: '#dc2626',
     lineHeight: '1',
-    marginBottom: '24px',
+    marginBottom: '12px',
     fontFamily: 'monospace',
-    textShadow: '0 0 30px rgba(255, 0, 0, 0.9), 0 0 60px rgba(255, 0, 0, 0.6), 0 8px 32px rgba(0, 0, 0, 0.8)',
-    letterSpacing: '8px',
+    letterSpacing: '4px',
+    textShadow: '0 4px 20px rgba(220, 38, 38, 0.5)',
   },
-  queueInfo: {
+  queueBadge: {
+    display: 'inline-block',
+    padding: '6px 16px',
+    backgroundColor: '#dc2626',
+    color: 'white',
+    borderRadius: '20px',
+    fontSize: '12px',
+    fontWeight: '700',
+    letterSpacing: '1px',
+    textTransform: 'uppercase',
+  },
+  queueDetails: {
     marginTop: '16px',
   },
-  serviceName: {
-    fontSize: '42px',
-    fontWeight: '800',
+  serviceNameLarge: {
+    fontSize: '28px',
+    fontWeight: '700',
     color: '#ffffff',
     marginBottom: '12px',
-    textShadow: '0 2px 10px rgba(0, 0, 0, 0.8)',
-    letterSpacing: '1px',
   },
-  counterInfo: {
+  counterBadge: {
+    display: 'inline-flex',
+    alignItems: 'center',
+    gap: '8px',
+    padding: '8px 16px',
+    backgroundColor: '#1e293b',
+    borderRadius: '8px',
+    fontSize: '14px',
+    color: '#cbd5e0',
+    fontWeight: '500',
+  },
+  counterIcon: {
+    fontSize: '16px',
+  },
+  rightColumn: {
     display: 'flex',
     flexDirection: 'column',
-    gap: '4px',
-    marginTop: '12px',
-  },
-  counterLabel: {
-    fontSize: '22px',
-    color: '#94a3b8',
-    fontWeight: '600',
-  },
-  counterName: {
-    fontSize: '20px',
-    color: '#cbd5e0',
+    gap: '24px',
   },
   calledSection: {
-    backgroundColor: '#1a1f3a',
+    backgroundColor: '#1e293b',
     borderRadius: '16px',
-    padding: '20px',
-    border: '2px solid #2d3748',
+    padding: '24px',
+    border: '1px solid #334155',
+    boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
     display: 'flex',
     flexDirection: 'column',
     flex: 1,
-    overflow: 'visible',
-    boxShadow: '0 4px 20px rgba(0,0,0,0.3)',
+  },
+  sectionHeaderSmall: {
+    display: 'flex',
+    alignItems: 'center',
+    gap: '12px',
+    marginBottom: '20px',
+    paddingBottom: '16px',
+    borderBottom: '1px solid #334155',
+  },
+  sectionIconSmall: {
+    width: '40px',
+    height: '40px',
+    borderRadius: '10px',
+    backgroundColor: '#3b82f6',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    color: 'white',
+  },
+  sectionTitleSmall: {
+    fontSize: '20px',
+    fontWeight: '700',
+    color: '#ffffff',
+    margin: 0,
   },
   calledContent: {
     flex: 1,
     display: 'flex',
     flexDirection: 'column',
-    overflow: 'visible',
   },
   calledList: {
-    flex: 1,
     display: 'flex',
     flexDirection: 'column',
-    gap: '10px',
-    overflow: 'visible',
+    gap: '12px',
   },
   calledCard: {
     backgroundColor: '#0f172a',
     borderRadius: '12px',
-    padding: '16px',
+    padding: '20px',
     border: '2px solid #3b82f6',
     textAlign: 'center',
-    boxShadow: '0 4px 12px rgba(59, 130, 246, 0.2)',
+    animation: 'slideInRight 0.4s ease-out',
+    transition: 'transform 0.2s ease',
   },
   queueNumberMedium: {
-    fontSize: '56px',
+    fontSize: '48px',
     fontWeight: '800',
     color: '#3b82f6',
     lineHeight: '1',
-    marginBottom: '8px',
+    marginBottom: '12px',
     fontFamily: 'monospace',
   },
-  serviceNameSmall: {
-    fontSize: '20px',
-    fontWeight: '700',
-    color: 'white',
+  queueInfoSmall: {
+    marginTop: '8px',
+  },
+  serviceNameMedium: {
+    fontSize: '18px',
+    fontWeight: '600',
+    color: '#ffffff',
     marginBottom: '6px',
   },
   counterInfoSmall: {
-    fontSize: '16px',
+    fontSize: '14px',
     color: '#94a3b8',
   },
   waitingSection: {
-    backgroundColor: '#1a1f3a',
+    backgroundColor: '#1e293b',
     borderRadius: '16px',
-    padding: '20px',
-    border: '2px solid #2d3748',
+    padding: '24px',
+    border: '1px solid #334155',
+    boxShadow: '0 4px 6px rgba(0, 0, 0, 0.1)',
     display: 'flex',
     flexDirection: 'column',
     flex: 1,
-    overflow: 'visible',
-    boxShadow: '0 4px 20px rgba(0,0,0,0.3)',
   },
   waitingContent: {
     flex: 1,
     display: 'flex',
     flexDirection: 'column',
-    overflow: 'visible',
   },
   waitingGrid: {
-    flex: 1,
     display: 'grid',
     gridTemplateColumns: 'repeat(2, 1fr)',
-    gap: '10px',
-    overflow: 'visible',
-    gridAutoRows: 'min-content',
+    gap: '12px',
   },
   waitingCard: {
     backgroundColor: '#0f172a',
     borderRadius: '12px',
-    padding: '16px',
-    border: '2px solid #475569',
+    padding: '20px',
+    border: '1px solid #475569',
     textAlign: 'center',
-    flexShrink: 0,
   },
   waitingServiceName: {
-    fontSize: '16px',
+    fontSize: '14px',
     fontWeight: '600',
     color: '#cbd5e0',
-    marginBottom: '8px',
+    marginBottom: '12px',
   },
   waitingCount: {
-    fontSize: '40px',
+    fontSize: '36px',
     fontWeight: '800',
     color: '#f59e0b',
     lineHeight: '1',
@@ -682,12 +767,16 @@ const styles = {
     alignItems: 'center',
     justifyContent: 'center',
     height: '100%',
-    padding: '40px',
+    padding: '60px',
+    gap: '20px',
+  },
+  emptyIcon: {
+    color: '#475569',
+    opacity: 0.5,
   },
   emptyText: {
-    fontSize: '24px',
+    fontSize: '20px',
     color: '#64748b',
-    marginTop: '20px',
     fontWeight: '500',
   },
   emptyStateSmall: {
@@ -695,71 +784,94 @@ const styles = {
     alignItems: 'center',
     justifyContent: 'center',
     height: '100%',
-    padding: '20px',
+    padding: '40px',
   },
   emptyTextSmall: {
-    fontSize: '18px',
+    fontSize: '16px',
     color: '#64748b',
     fontWeight: '500',
   },
-  marqueeContainer: {
+  bannerContainer: {
     backgroundColor: '#dc2626',
-    padding: '24px 0',
-    marginTop: 'auto',
+    padding: '20px 0',
+    borderRadius: '12px',
     overflow: 'hidden',
-    position: 'relative',
-    borderTop: '3px solid #991b1b',
-    borderBottom: '3px solid #991b1b',
-    boxShadow: '0 -4px 20px rgba(220, 38, 38, 0.4)',
+    border: '1px solid #991b1b',
+    boxShadow: '0 4px 12px rgba(220, 38, 38, 0.3)',
+  },
+  bannerContent: {
+    display: 'flex',
+    alignItems: 'center',
+    gap: '24px',
+    whiteSpace: 'nowrap',
+    animation: 'scrollBanner 40s linear infinite',
+  },
+  bannerLogo: {
+    width: '40px',
+    height: '40px',
     flexShrink: 0,
   },
-  marqueeWrapper: {
+  bannerLogoImg: {
     width: '100%',
-    overflow: 'hidden',
-    position: 'relative',
+    height: '100%',
+    objectFit: 'contain',
+    filter: 'brightness(0) invert(1)',
   },
-  marqueeContent: {
-    display: 'inline-flex',
-    whiteSpace: 'nowrap',
-    animation: 'marquee 60s linear infinite',
-    willChange: 'transform',
-  },
-  marqueeText: {
-    fontSize: '32px',
-    fontWeight: '800',
+  bannerText: {
+    fontSize: '18px',
+    fontWeight: '600',
     color: 'white',
-    textShadow: '2px 2px 8px rgba(0,0,0,0.5)',
-    letterSpacing: '2px',
-    paddingRight: '200px',
-    display: 'inline-block',
+    letterSpacing: '0.5px',
   },
 };
 
-// Add marquee and pulse animations
+// Add CSS animations
 if (typeof document !== 'undefined') {
   const style = document.createElement('style');
   style.textContent = `
-    @keyframes marquee {
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    @keyframes slideInUp {
+      from {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+    @keyframes slideInRight {
+      from {
+        opacity: 0;
+        transform: translateX(-20px);
+      }
+      to {
+        opacity: 1;
+        transform: translateX(0);
+      }
+    }
+    @keyframes scrollBanner {
       0% {
-        transform: translateX(100vw);
+        transform: translateX(100%);
       }
       100% {
-        transform: translateX(-50%);
+        transform: translateX(-100%);
       }
     }
-    @keyframes pulseGlow {
-      0%, 100% {
-        box-shadow: 0 0 40px rgba(220, 38, 38, 0.8), 0 8px 32px rgba(220, 38, 38, 0.5);
-        border-color: #dc2626;
-      }
-      50% {
-        box-shadow: 0 0 60px rgba(255, 0, 0, 1), 0 8px 40px rgba(255, 0, 0, 0.7);
-        border-color: #ff0000;
-      }
+    .serving-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 32px rgba(220, 38, 38, 0.5) !important;
+    }
+    .called-card:hover {
+      transform: translateX(4px);
     }
   `;
-  if (!document.head.querySelector('style[data-marquee-animation]')) {
-    style.setAttribute('data-marquee-animation', 'true');
+  if (!document.head.querySelector('style[data-display-board-animations]')) {
+    style.setAttribute('data-display-board-animations', 'true');
     document.head.appendChild(style);
   }
 }
+
