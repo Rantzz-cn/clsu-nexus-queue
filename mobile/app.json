@@ -1,0 +1,46 @@
+{
+  "expo": {
+    "name": "QTech",
+    "slug": "qtech-mobile",
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "userInterfaceStyle": "light",
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "icon": "./assets/icon.png",
+    "splash": {
+      "image": "./assets/logo.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff"
+    },
+    "plugins": [
+      [
+        "expo-notifications",
+        {
+          "color": "#dc2626"
+        }
+      ]
+    ],
+    "ios": {
+      "supportsTablet": true,
+      "bundleIdentifier": "com.qtech.mobile"
+    },
+    "android": {
+      "package": "com.qtech.mobile",
+      "versionCode": 1,
+      "permissions": [
+        "RECEIVE_BOOT_COMPLETED"
+      ],
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/icon.png",
+        "backgroundColor": "#ffffff"
+      }
+    },
+    "extra": {
+      "eas": {
+        "projectId": "c759269f-3765-4b2b-baf2-ee3c3ee02d06"
+      }
+    }
+  }
+}

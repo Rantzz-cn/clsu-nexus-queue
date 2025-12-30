@@ -1,341 +1,257 @@
-# CLSU NEXUS
-**Smart Queue Management System**
+# Q-Tech - Smart Queue Management System
 
-> *No More Waiting in Line - Smart Queuing for a Better Campus Experience*
+> *No More Waiting in Line - Smart Queuing for a Better Experience*
 
-## Project Overview
+[![Node.js](https://img.shields.io/badge/Node.js-18+-green.svg)](https://nodejs.org/)
+[![React](https://img.shields.io/badge/React-18+-blue.svg)](https://reactjs.org/)
+[![PostgreSQL](https://img.shields.io/badge/PostgreSQL-14+-blue.svg)](https://www.postgresql.org/)
+[![License](https://img.shields.io/badge/License-ISC-blue.svg)](LICENSE)
 
-CLSU NEXUS is an intelligent queue management system designed to digitize and optimize queuing for various campus services at Central Luzon State University. The system eliminates physical waiting lines by providing virtual queue numbers through a mobile application, real-time status updates, and efficient service counter management.
+## 📱 Overview
 
-## Vision
+Q-Tech is a comprehensive digital queue management system that eliminates physical waiting lines by providing virtual queue numbers through a mobile application, real-time status updates, and efficient service counter management.
 
-To transform campus service delivery by eliminating long physical queues, improving service efficiency, and enhancing the experience for both students and service providers through smart digital queuing technology.
+## ✨ Key Features
 
-## Core Problem Statement
+### For Students
+- 📱 **Mobile App** - Request queue numbers from anywhere
+- 🔔 **Real-time Updates** - Live queue position and status
+- ⏱️ **Wait Time Estimation** - Know how long to wait
+- 📊 **Queue History** - View past queue requests
+- 🚫 **Queue Cancellation** - Cancel if needed
 
-Traditional queuing systems at universities create several problems:
-- Students waste time waiting in physical lines
-- Service counters are overwhelmed during peak hours
-- No visibility into wait times or queue status
-- Poor resource allocation and service management
-- Difficult to track service metrics and improve efficiency
+### For Counter Staff
+- 💻 **Web Dashboard** - Manage queues efficiently
+- 📞 **Call Next** - One-click queue management
+- 📈 **Statistics** - Track counter performance
+- ⚡ **Real-time Sync** - Instant queue updates
 
-## Solution
+### For Administrators
+- 🎛️ **Service Management** - Create and manage services
+- 👥 **User Management** - Manage students and staff
+- 📊 **Analytics Dashboard** - Comprehensive insights
+- 🖥️ **Display Board** - TV screen for queue display
+- ⚙️ **System Settings** - Configure system-wide settings
+- 🔧 **Maintenance Mode** - Control system availability
 
-A comprehensive digital queue management system that allows students to:
-- Get virtual queue numbers via mobile app
-- Monitor real-time queue status
-- Receive notifications when their turn approaches
-- View estimated wait times
-- Access queue history
-
-Service providers can:
-- Manage multiple service counters efficiently
-- Track serving times and efficiency
-- Monitor queue statistics in real-time
-- Better allocate resources
-
-## Target Beneficiaries
-
-### Primary Users
-
-1. **Students**
-   - Get queue numbers remotely
-   - No physical waiting required
-   - Real-time updates and notifications
-   - Better time management
-
-2. **Service Providers/Workers**
-   - Organized service workflow
-   - Reduced counter congestion
-   - Service analytics and insights
-   - Improved customer service
-
-3. **Campus Administrators**
-   - Service efficiency metrics
-   - Peak hour analysis
-   - Resource optimization data
-   - Better service planning
-
-### Service Areas (Initial)
-
-- Registrar's Office (enrollment, transcript requests)
-- Cashier's Office (tuition payments, fees)
-- Library Services (book requests, inquiries)
-- Clinic/Medical Services (appointments)
-- Canteen/Food Services (peak hour ordering)
-- Guidance Office (counseling appointments)
-- Admission Office (inquiries, applications)
-
-## Core Features
-
-### 1. Virtual Queue System
-- QR code or manual queue number generation
-- Queue number reservation
-- Multiple service categories
-- Priority queue options (optional)
-
-### 2. Real-Time Queue Management
-- Live queue status display
-- Current serving number
-- Queue position tracking
-- Estimated wait time calculation
-- Multiple counter support
-
-### 3. Mobile Application (Student)
-- User registration and authentication
-- Queue number request
-- Real-time queue monitoring
-- Push notifications
-- Queue history
-- Service location finder
-
-### 4. Service Counter Dashboard
-- Next number calling
-- Service counter login/logout
-- Current serving number display
-- Skip/transfer functionality
-- Service completion marking
-- Counter statistics
-
-### 5. Admin Dashboard
-- Service management
-- Counter management
-- Real-time monitoring
-- Analytics and reports
-- User management
-- System settings
-
-### 6. Notifications System
-- Queue number ready alerts
-- Approaching turn notifications
-- Service counter alerts
-- System announcements
-- Email notifications (optional)
-
-### 7. Analytics & Reporting
-- Peak hour analysis
-- Average wait times
-- Service completion rates
-- Counter efficiency metrics
-- Daily/weekly/monthly reports
-- Service demand forecasting
-
-## Technology Stack
-
-### Frontend
-- **Mobile App**: React Native or Flutter (iOS & Android)
-- **Web Dashboard**: React.js with Next.js
-- **Counter Display**: React or simple HTML/CSS for large screens
+## 🛠️ Tech Stack
 
 ### Backend
-- **API Server**: Node.js with Express.js or Python with Django
-- **Real-time Communication**: Socket.io or WebSockets
-- **Authentication**: JWT (JSON Web Tokens)
-- **API Documentation**: Swagger/OpenAPI
+- **Node.js** with Express.js
+- **PostgreSQL** database
+- **Socket.io** for real-time updates
+- **JWT** for authentication
+- **bcrypt** for password hashing
 
-### Database
-- **Primary Database**: PostgreSQL
-- **Caching**: Redis (for queue state management)
-- **Session Storage**: Redis or PostgreSQL
+### Frontend
+- **React/Next.js** for web dashboard
+- **React Native** for mobile app
+- **Socket.io Client** for real-time updates
 
 ### Infrastructure
-- **Cloud Hosting**: AWS, Azure, or GCP
-- **Push Notifications**: Firebase Cloud Messaging (FCM) or OneSignal
-- **File Storage**: AWS S3 or Cloudinary (for profile images)
-- **Containerization**: Docker
+- **PostgreSQL** for data storage
+- **WebSocket** for real-time communication
+- **RESTful API** architecture
 
-### Development Tools
-- **Version Control**: Git & GitHub
-- **CI/CD**: GitHub Actions
-- **Project Management**: GitHub Projects or Trello
-
-## Project Structure
-
-```
-clsu-nexus-queue/
-├── mobile-app/          # React Native/Flutter mobile application
-│   ├── src/
-│   │   ├── screens/
-│   │   ├── components/
-│   │   ├── navigation/
-│   │   ├── services/
-│   │   └── utils/
-│   ├── assets/
-│   └── config/
-│
-├── web-dashboard/       # Admin & Counter dashboard (React)
-│   ├── src/
-│   │   ├── pages/
-│   │   ├── components/
-│   │   ├── layouts/
-│   │   └── services/
-│   └── public/
-│
-├── backend/             # API server
-│   ├── src/
-│   │   ├── routes/
-│   │   ├── controllers/
-│   │   ├── models/
-│   │   ├── middleware/
-│   │   ├── services/
-│   │   └── utils/
-│   ├── tests/
-│   └── config/
-│
-├── database/            # Database schemas and migrations
-│   ├── migrations/
-│   ├── seeds/
-│   └── schemas/
-│
-├── docs/                # Documentation
-│   ├── project-proposal.md
-│   ├── architecture.md
-│   ├── api-documentation.md
-│   ├── database-schema.md
-│   └── user-guide.md
-│
-└── README.md
-```
-
-## Key User Flows
-
-### Student Flow
-1. Download and register in mobile app
-2. Select service type (Registrar, Cashier, etc.)
-3. Request queue number
-4. Receive queue number and position
-5. Monitor real-time status
-6. Receive notification when approaching
-7. Arrive at service counter when called
-8. Get served and complete queue
-
-### Service Counter Flow
-1. Service provider logs into counter dashboard
-2. Set counter status (available/busy/closed)
-3. Call next number from queue
-4. Mark service as completed
-5. View counter statistics
-6. Handle skipped/transferred numbers
-
-### Admin Flow
-1. Log into admin dashboard
-2. Manage services and counters
-3. Monitor real-time queue status
-4. View analytics and reports
-5. Manage users and settings
-6. Generate reports
-
-## Database Schema (Key Tables)
-
-- **Users** - Students, service providers, admins
-- **Services** - Service types (Registrar, Cashier, etc.)
-- **Counters** - Service counters for each service
-- **QueueEntries** - Queue numbers and status
-- **QueueLogs** - Historical queue data
-- **Notifications** - Notification records
-- **ServiceSessions** - Active service sessions
-
-## Implementation Phases
-
-### Phase 1: Foundation (Months 1-2)
-- [ ] Project setup and architecture
-- [ ] Database design and setup
-- [ ] User authentication system
-- [ ] Basic API endpoints
-- [ ] Simple web dashboard (admin)
-
-### Phase 2: Core Features (Months 3-5)
-- [ ] Queue number generation
-- [ ] Mobile app (basic features)
-- [ ] Counter dashboard
-- [ ] Real-time queue updates
-- [ ] Basic notifications
-
-### Phase 3: Enhanced Features (Months 6-7)
-- [ ] Push notifications
-- [ ] Wait time estimation
-- [ ] Queue history
-- [ ] Analytics dashboard
-- [ ] Advanced features
-
-### Phase 4: Testing & Deployment (Months 8-9)
-- [ ] Comprehensive testing
-- [ ] Performance optimization
-- [ ] Security hardening
-- [ ] User acceptance testing
-- [ ] Deployment and launch
-- [ ] Documentation
-
-## Getting Started
+## 🚀 Quick Start
 
 ### Prerequisites
-- Node.js 18+ or Python 3.10+
+- Node.js 18+
 - PostgreSQL 14+
-- Redis (optional but recommended)
-- Git
-- React Native/Flutter development environment
+- npm or yarn
 
 ### Installation
+
+1. **Clone the repository**:
+   ```bash
+   git clone <repository-url>
+   cd capstoneproj
+   ```
+
+2. **Setup Backend**:
+   ```bash
+   cd backend
+   npm install
+   cp .env.example .env
+   # Configure .env with your database credentials
+   ```
+
+3. **Setup Database**:
+   ```bash
+   createdb clsu_nexus
+   psql -d clsu_nexus -f ../database/migrations/001_initial_schema.sql
+   psql -d clsu_nexus -f ../database/migrations/002_create_system_settings.sql
+   psql -d clsu_nexus -f ../database/migrations/003_add_queue_prefix_to_services.sql
+   psql -d clsu_nexus -f ../database/migrations/004_add_performance_indexes.sql
+   ```
+
+4. **Seed Demo Data** (Optional):
+   ```bash
+   psql -d clsu_nexus -f ../database/seeds/demo-data.sql
+   ```
+
+5. **Start Backend**:
+   ```bash
+   cd backend
+   npm run dev
+   ```
+
+6. **Start Web Dashboard**:
+   ```bash
+   cd web-dashboard
+   npm install
+   npm run dev
+   ```
+
+7. **Access**:
+   - Backend API: http://localhost:3000
+   - Web Dashboard: http://localhost:3001
+
+## 🎬 Demo Credentials
+
+For portfolio demonstration, use these demo accounts:
+
+### Administrator
+- **Email**: `admin@clsu.edu.ph`
+- **Password**: `demo123`
+
+### Counter Staff
+- **Email**: `staff1@clsu.edu.ph`
+- **Password**: `demo123`
+
+### Student
+- **Email**: `student1@clsu.edu.ph`
+- **Password**: `demo123`
+
+> ⚠️ **Note**: These are demo credentials only. Change all passwords before production deployment.
+
+## 📸 Screenshots
+
+### Mobile App
+- Login Screen
+- Services List
+- Queue Status
+- Queue History
+
+### Web Dashboard
+- Admin Dashboard
+- Service Management
+- Queue Management
+- Analytics
+- Display Board
+
+## 🧪 Testing
+
+### Run Tests
 ```bash
-# Clone repository
-git clone <repository-url>
-cd clsu-nexus-queue
-
-# Backend setup
+# Unit tests
 cd backend
-npm install
-cp .env.example .env
-# Configure .env file
-npm run migrate
-npm run dev
+npm run test:unit
 
-# Frontend setup
-cd ../web-dashboard
-npm install
-npm run dev
+# Integration tests
+npm run test:integration
 
-# Mobile app setup
-cd ../mobile-app
-npm install
-npm run ios  # or npm run android
+# All tests
+npm test
 ```
 
-## Project Status
+### Test Coverage
+- ✅ 20 Unit Tests
+- ✅ 53 Integration Tests
+- ✅ Performance Tests
+- **Total**: 73 tests passing
 
-🚧 **Phase 1: Planning & Design** (Current)
-- Project structure setup
-- Requirements documentation
-- Architecture design
+## 📚 Documentation
 
-📋 **Phase 2: MVP Development** (Upcoming)
-- Core queue system
-- Basic mobile app
-- Counter dashboard
+Comprehensive documentation is available in the `docs/` directory:
 
-## Future Enhancements
+- [API Documentation](docs/api-documentation.md)
+- [Architecture](docs/architecture.md)
+- [Database Schema](docs/database-schema.md)
+- [Deployment Guide](docs/deployment-guide.md)
+- [Performance Optimization](docs/performance-optimization.md)
+- [User Acceptance Testing](docs/user-acceptance-testing.md)
 
-- [ ] Multi-language support
-- [ ] Voice announcements
-- [ ] Integration with campus ID system
-- [ ] Appointment scheduling
-- [ ] Service ratings and feedback
-- [ ] AI-powered wait time prediction
-- [ ] QR code scanning for faster entry
-- [ ] Integration with campus map
+## 🏗️ Project Structure
 
-## License
+```
+capstoneproj/
+├── backend/           # Node.js/Express API
+│   ├── controllers/   # Request handlers
+│   ├── models/        # Database models
+│   ├── routes/        # API routes
+│   ├── middleware/    # Custom middleware
+│   ├── socket/         # WebSocket handlers
+│   └── tests/         # Test files
+├── web-dashboard/      # React/Next.js admin dashboard
+│   └── src/
+│       ├── pages/     # Next.js pages
+│       └── components/# React components
+├── mobile/            # React Native mobile app
+│   └── src/
+│       ├── screens/   # App screens
+│       └── components/# React Native components
+├── database/          # Database files
+│   ├── migrations/    # Database migrations
+│   └── seeds/         # Demo data
+└── docs/              # Documentation
+```
 
-[To be determined]
+## 🎯 Key Features Implemented
 
-## Contact
+- ✅ User Authentication (JWT)
+- ✅ Queue Number Generation
+- ✅ Real-time Queue Updates (WebSocket)
+- ✅ Multi-service Support
+- ✅ Custom Queue Prefixes
+- ✅ System Maintenance Mode
+- ✅ Admin Dashboard
+- ✅ Counter Dashboard
+- ✅ TV Display Board
+- ✅ Analytics & Reports
+- ✅ Performance Optimization
+- ✅ Comprehensive Testing
 
-**Project Developer**: [Your Name]  
-**University**: Central Luzon State University  
-**Academic Year**: 2024-2025  
-**Capstone Project**: Bachelor of Science in Information Technology
+## 📊 Performance
+
+- **API Response Time**: <200ms average
+- **Database Queries**: Optimized with 27 indexes
+- **Caching**: Response caching for frequently accessed data
+- **Real-time Updates**: <1s latency
+
+## 🔒 Security
+
+- JWT token authentication
+- Password hashing with bcrypt
+- Input validation
+- SQL injection protection
+- CORS configuration
+- Environment variable security
+
+## 🚀 Deployment
+
+See [Deployment Guide](docs/deployment-guide.md) for detailed instructions.
+
+Quick deployment options:
+- **Backend**: Railway, Render, Heroku
+- **Web Dashboard**: Vercel, Netlify
+- **Database**: Railway PostgreSQL, Supabase
+
+## 📝 License
+
+ISC License
+
+## 👤 Author
+
+**Your Name**
+- GitHub: [@yourusername](https://github.com/yourusername)
+- Email: your.email@example.com
+
+## 🙏 Acknowledgments
+
+- Central Luzon State University
+- All contributors and testers
 
 ---
 
-*Powered by CLSU, Inspired by Siel* 🐍💚
-
+**Built with ❤️ by Q-Tech**
