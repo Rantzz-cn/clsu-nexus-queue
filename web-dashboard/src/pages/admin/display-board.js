@@ -479,12 +479,12 @@ const styles = {
     flex: 1,
     display: 'flex',
     flexDirection: 'column',
-    backgroundColor: '#1a1f3a',
-    borderRadius: '20px',
-    padding: '28px',
-    border: '2px solid #2d3748',
+    backgroundColor: '#0f1419',
+    borderRadius: '24px',
+    padding: '32px',
+    border: '3px solid #dc2626',
     overflow: 'visible',
-    boxShadow: '0 4px 20px rgba(0,0,0,0.3)',
+    boxShadow: '0 0 30px rgba(220, 38, 38, 0.4), 0 8px 32px rgba(0,0,0,0.5)',
   },
   sectionHeader: {
     display: 'flex',
@@ -507,12 +507,13 @@ const styles = {
     flexShrink: 0,
   },
   sectionTitle: {
-    fontSize: '32px',
-    fontWeight: '800',
-    color: '#dc2626',
+    fontSize: '40px',
+    fontWeight: '900',
+    color: '#ff0000',
     margin: 0,
     textTransform: 'uppercase',
-    letterSpacing: '1px',
+    letterSpacing: '2px',
+    textShadow: '0 0 20px rgba(255, 0, 0, 0.8)',
   },
   servingContent: {
     flex: 1,
@@ -529,30 +530,35 @@ const styles = {
     overflow: 'visible',
   },
   servingCard: {
-    backgroundColor: '#0f172a',
-    borderRadius: '16px',
-    padding: '28px',
-    border: '3px solid #dc2626',
-    boxShadow: '0 8px 24px rgba(220, 38, 38, 0.3)',
+    backgroundColor: '#1a0a0a',
+    borderRadius: '20px',
+    padding: '40px',
+    border: '4px solid #dc2626',
+    boxShadow: '0 0 40px rgba(220, 38, 38, 0.8), 0 8px 32px rgba(220, 38, 38, 0.5)',
     textAlign: 'center',
+    position: 'relative',
+    animation: 'pulseGlow 2s ease-in-out infinite',
   },
   queueNumberLarge: {
-    fontSize: '120px',
+    fontSize: '180px',
     fontWeight: '900',
-    color: '#dc2626',
+    color: '#ff0000',
     lineHeight: '1',
-    marginBottom: '16px',
+    marginBottom: '24px',
     fontFamily: 'monospace',
-    textShadow: '0 4px 20px rgba(220, 38, 38, 0.6)',
+    textShadow: '0 0 30px rgba(255, 0, 0, 0.9), 0 0 60px rgba(255, 0, 0, 0.6), 0 8px 32px rgba(0, 0, 0, 0.8)',
+    letterSpacing: '8px',
   },
   queueInfo: {
     marginTop: '16px',
   },
   serviceName: {
-    fontSize: '32px',
-    fontWeight: '700',
-    color: 'white',
-    marginBottom: '8px',
+    fontSize: '42px',
+    fontWeight: '800',
+    color: '#ffffff',
+    marginBottom: '12px',
+    textShadow: '0 2px 10px rgba(0, 0, 0, 0.8)',
+    letterSpacing: '1px',
   },
   counterInfo: {
     display: 'flex',
@@ -729,7 +735,7 @@ const styles = {
   },
 };
 
-// Add marquee animation
+// Add marquee and pulse animations
 if (typeof document !== 'undefined') {
   const style = document.createElement('style');
   style.textContent = `
@@ -739,6 +745,16 @@ if (typeof document !== 'undefined') {
       }
       100% {
         transform: translateX(-50%);
+      }
+    }
+    @keyframes pulseGlow {
+      0%, 100% {
+        box-shadow: 0 0 40px rgba(220, 38, 38, 0.8), 0 8px 32px rgba(220, 38, 38, 0.5);
+        border-color: #dc2626;
+      }
+      50% {
+        box-shadow: 0 0 60px rgba(255, 0, 0, 1), 0 8px 40px rgba(255, 0, 0, 0.7);
+        border-color: #ff0000;
       }
     }
   `;
