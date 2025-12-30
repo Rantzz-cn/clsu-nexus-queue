@@ -78,16 +78,16 @@ Q-Tech is a comprehensive digital queue management system that eliminates physic
 
 3. **Setup Database**:
    ```bash
-   createdb clsu_nexus
-   psql -d clsu_nexus -f ../database/migrations/001_initial_schema.sql
-   psql -d clsu_nexus -f ../database/migrations/002_create_system_settings.sql
-   psql -d clsu_nexus -f ../database/migrations/003_add_queue_prefix_to_services.sql
-   psql -d clsu_nexus -f ../database/migrations/004_add_performance_indexes.sql
+   createdb qtech
+   psql -d qtech -f ../database/migrations/001_initial_schema.sql
+   psql -d qtech -f ../database/migrations/002_create_system_settings.sql
+   psql -d qtech -f ../database/migrations/003_add_queue_prefix_to_services.sql
+   psql -d qtech -f ../database/migrations/004_add_performance_indexes.sql
    ```
 
 4. **Seed Demo Data** (Optional):
    ```bash
-   psql -d clsu_nexus -f ../database/seeds/demo-data.sql
+   psql -d qtech -f ../database/seeds/demo-data.sql
    ```
 
 5. **Start Backend**:
@@ -175,7 +175,7 @@ Comprehensive documentation is available in the `docs/` directory:
 ## 🏗️ Project Structure
 
 ```
-capstoneproj/
+Q0Tech/
 ├── backend/           # Node.js/Express API
 │   ├── controllers/   # Request handlers
 │   ├── models/        # Database models
@@ -244,7 +244,7 @@ ISC License
 ## 👤 Author
 
 - GitHub: [Rantzz-cn](https://github.com/Rantzz-cn)
-- Email: rongnuanteraldico@gmail.com
+- Email: teraldicoranier@gmail.com
 
 
 
