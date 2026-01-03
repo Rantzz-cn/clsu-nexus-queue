@@ -1,11 +1,11 @@
-# CLSU NEXUS - Smart Queue Management System
+# Q-Tech - Smart Queue Management System
 ## Project Proposal Document
 
 ---
 
 ## 1. Executive Summary
 
-**Project Title**: CLSU NEXUS - Smart Queue Management System  
+**Project Title**: Q-Tech - Smart Queue Management System  
 **Project Type**: Capstone Project  
 **Institution**: Central Luzon State University  
 **Degree Program**: Bachelor of Science in Information Technology  
@@ -40,7 +40,7 @@ Central Luzon State University experiences significant challenges with tradition
 ## 3. Proposed Solution
 
 ### Solution Overview
-CLSU NEXUS is an intelligent queue management system that digitizes the queuing process through:
+Q-Tech is an intelligent queue management system that digitizes the queuing process through:
 
 - **Virtual Queue Numbers**: Students receive queue numbers via mobile app
 - **Real-Time Monitoring**: Live queue status and position tracking
@@ -49,7 +49,7 @@ CLSU NEXUS is an intelligent queue management system that digitizes the queuing 
 - **Analytics Dashboard**: Service metrics and insights
 
 ### Key Innovation
-Unlike traditional systems, CLSU NEXUS allows students to:
+Unlike traditional systems, Q-Tech allows students to:
 - Join queues remotely without physical presence
 - Monitor queue status in real-time
 - Manage their time efficiently
@@ -416,7 +416,7 @@ Unlike traditional systems, CLSU NEXUS allows students to:
 
 ## 16. Conclusion
 
-CLSU NEXUS Smart Queue Management System addresses a real problem faced by students and service providers at Central Luzon State University. The project demonstrates modern software development practices, full-stack development skills, and real-world problem-solving capabilities, making it an ideal capstone project.
+Q-Tech Smart Queue Management System addresses a real problem faced by students and service providers at Central Luzon State University. The project demonstrates modern software development practices, full-stack development skills, and real-world problem-solving capabilities, making it an ideal capstone project.
 
 The system will significantly improve campus service delivery, enhance user experience, and provide valuable insights for continuous improvement.
 

@@ -1,4 +1,4 @@
-# CLSU NEXUS - API Documentation
+# Q-Tech - API Documentation
 
 ## Base URL
 ```

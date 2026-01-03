@@ -2,7 +2,7 @@
 
 ## Overview
 
-This document describes all environment variables used in the CLSU NEXUS Queue Management System.
+This document describes all environment variables used in the Q-Tech Queue Management System.
 
 ## Backend Environment Variables
 

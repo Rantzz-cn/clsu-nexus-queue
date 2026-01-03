@@ -1,8 +1,8 @@
-# CLSU NEXUS - Implementation Roadmap
+# Q-Tech - Implementation Roadmap
 
 ## Overview
 
-This document provides a step-by-step roadmap for implementing the CLSU NEXUS Smart Queue Management System. Follow this guide to build your capstone project systematically.
+This document provides a step-by-step roadmap for implementing the Q-Tech Smart Queue Management System. Follow this guide to build your capstone project systematically.
 
 ---
 

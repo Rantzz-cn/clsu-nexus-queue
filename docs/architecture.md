@@ -1,8 +1,8 @@
-# CLSU NEXUS - System Architecture Documentation
+# Q-Tech - System Architecture Documentation
 
 ## Overview
 
-This document describes the technical architecture of the CLSU NEXUS Smart Queue Management System, including system design, component interactions, and technology choices.
+This document describes the technical architecture of the Q-Tech Smart Queue Management System, including system design, component interactions, and technology choices.
 
 ## Architecture Principles
 
@@ -461,5 +461,5 @@ Response: {
 
 ---
 
-This architecture provides a solid foundation for the CLSU NEXUS system while allowing for future growth and enhancements.
+This architecture provides a solid foundation for the Q-Tech system while allowing for future growth and enhancements.
 

@@ -2,7 +2,7 @@
 
 ## Overview
 
-This document outlines the User Acceptance Testing (UAT) process for the CLSU NEXUS Queue Management System. UAT ensures that the system meets user requirements and is ready for production deployment.
+This document outlines the User Acceptance Testing (UAT) process for the Q-Tech Queue Management System. UAT ensures that the system meets user requirements and is ready for production deployment.
 
 ## Objectives
 

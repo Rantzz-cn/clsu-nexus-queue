@@ -2,7 +2,7 @@
 
 ## Overview
 
-This guide provides step-by-step instructions for deploying the CLSU NEXUS Queue Management System to a production environment.
+This guide provides step-by-step instructions for deploying the Q-Tech Queue Management System to a production environment.
 
 ## Prerequisites
 

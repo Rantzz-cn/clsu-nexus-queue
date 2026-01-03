@@ -1,8 +1,8 @@
-# CLSU NEXUS - Database Schema Documentation
+# Q-Tech - Database Schema Documentation
 
 ## Overview
 
-This document describes the database schema for the CLSU NEXUS Smart Queue Management System. The schema is designed to support multi-service queuing, real-time updates, user management, and comprehensive analytics.
+This document describes the database schema for the Q-Tech Smart Queue Management System. The schema is designed to support multi-service queuing, real-time updates, user management, and comprehensive analytics.
 
 ## Database: PostgreSQL
 

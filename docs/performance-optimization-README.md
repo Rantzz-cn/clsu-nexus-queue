@@ -2,7 +2,7 @@
 
 ## Overview
 
-This guide explains the performance optimizations implemented for the CLSU NEXUS Queue Management System and how to apply them.
+This guide explains the performance optimizations implemented for the Q-Tech Queue Management System and how to apply them.
 
 ## Implemented Optimizations
 

@@ -2,7 +2,7 @@
 
 ## Overview
 
-This document outlines the performance optimization strategy for the CLSU NEXUS Queue Management System. The goal is to ensure the system performs efficiently under load and provides a fast, responsive user experience.
+This document outlines the performance optimization strategy for the Q-Tech Queue Management System. The goal is to ensure the system performs efficiently under load and provides a fast, responsive user experience.
 
 ## Performance Targets
 

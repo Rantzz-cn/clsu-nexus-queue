@@ -2,13 +2,13 @@
 
 ## Executive Summary
 
-**Project**: CLSU NEXUS Queue Management System  
+**Project**: Q-Tech Queue Management System  
 **Testing Period**: _________________________ to _________________________  
 **Report Date**: _________________________  
 **Report Version**: 1.0
 
 ### Overview
-This report summarizes the results of User Acceptance Testing (UAT) conducted for the CLSU NEXUS Queue Management System. The testing involved [X] participants across [X] user roles over [X] days.
+This report summarizes the results of User Acceptance Testing (UAT) conducted for the Q-Tech Queue Management System. The testing involved [X] participants across [X] user roles over [X] days.
 
 ### Key Findings
 - **Total Test Cases**: _________________________

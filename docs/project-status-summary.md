@@ -1,4 +1,4 @@
-# CLSU NEXUS - Project Status Summary
+# Q-Tech - Project Status Summary
 
 ## ✅ Completed Phases
 
